@@ -35,21 +35,8 @@ def create_season_flag(date):
     return season_flag
 
 
-'''def catg_to_dummy(data,column,top_n):
-    """
-    Returns a dataframe with dummy variables for categorical variables
-
-    Parameters
-    ----------
-    data : dataframe containing data including column with categorical variable
-    column : Categorical Column [1-n]
-    top_n : integer indicating top n categories
-    
-    Returns
-    -------
-    Dataframe with dummy variables for categorical variable indicated by 'column'
-
-    """
+#Please ignore function below
+'''def catg_to_dummy_manual(data,column,top_n):
     list=data[column].tolist()    
     dict_counts=Counter(list);
     sorted_dict_counts = sorted(dict_counts.items(), key=operator.itemgetter(1),reverse=True)
@@ -68,7 +55,7 @@ def create_season_flag(date):
         print data 
         '''
     
-def catg_to_dummy_2(data,column,top_n):
+def catg_to_dummy(data,column,top_n):
     """
     Returns a dataframe with dummy variables for categorical variables
 
@@ -98,7 +85,7 @@ if __name__=='__main__':
     'Director':['James Bond','Steven Spielberg','Steven Spielberg','Steven Spielberg','James Bond','Steven Spielberg','James Bond','Martin S']}
     df1=pd.DataFrame(data)
     column_name='Director'
-    new_df=catg_to_dummy_2(df1,column_name,2)
+    new_df=catg_to_dummy(df1,column_name,2)
     print new_df
     
     
