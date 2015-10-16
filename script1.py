@@ -4,13 +4,15 @@ from collections import Counter
 import pandas as pd
 import operator
 
-def create_season_flag(date):
+'''
+def create_season_flag(df1, field):
     """
     Return season flag from date string
 
     Parameters
     ----------
-    date : date string in format 'YYYY-MM'DD
+    df1 : dataframe containing date field
+    field : field containing date values
     
     Returns
     -------
@@ -19,10 +21,14 @@ def create_season_flag(date):
     [4] - Quarter in the year YYYY
 
     """
-    if not isinstance(date,string):
-        raise TypeError('date variable must be a string')
+    for i,value in enumerate(df1[field]):
+        if int(df1.xs(i)[field])<=3:
+            df1.xs(i)[field]=1
+        else:
+            pass
+    return df1
+
         
-    year=date[:4]
     if (int(date[5:7])<=3):
         quarter=1
     elif (int(date[5:7])<=6):
@@ -32,7 +38,7 @@ def create_season_flag(date):
     else:
         quarter=4
     season_flag=str(year)+str(quarter)
-    return season_flag
+    return season_flag'''
 
 
 #Please ignore function below
@@ -78,20 +84,21 @@ def catg_to_dummy(data,column,top_n):
         
 
 if __name__=='__main__':
-#    date='2008-03-07'
-#    season_flag=create_season_flag(date)
-#    print season_flag
     data={'Gross':[2000,5000,5000,5500,2000,10000,500,7000],
-    'Director':['James Bond','Steven Spielberg','Steven Spielberg','Steven Spielberg','James Bond','Steven Spielberg','James Bond','Martin S']}
+    'Director':['James Bond','Steven Spielberg','Steven Spielberg','Steven Spielberg','James Bond','Steven Spielberg','James Bond','Martin S'],
+    'Dates' : ['2008-03-05','2009-10-12','2011-11-12','2011-10-10','2008-01-01','2007-02-02','2006-02-02','2015-01-01']}
     df1=pd.DataFrame(data)
-    column_name='Director'
-    new_df=catg_to_dummy(df1,column_name,2)
-    print new_df
-    
-    
-    
-    
-    
+    column_name='Dates'
+    df3=create_season_flag(df1,column_name)
+    print df3
+#    print season_flag
+#    data={'Gross':[2000,5000,5000,5500,2000,10000,500,7000],
+#    'Director':['James Bond','Steven Spielberg','Steven Spielberg','Steven Spielberg','James Bond','Steven Spielberg','James Bond','Martin S']}
+#    df1=pd.DataFrame(data)
+#    column_name='Director'
+#    new_df=catg_to_dummy(df1,column_name,2)
+#    print new_df
+
     
     
     
