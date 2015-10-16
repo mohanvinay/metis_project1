@@ -35,7 +35,7 @@ def create_season_flag(date):
     return season_flag
 
 
-def catg_to_dummy(data,column,top_n):
+'''def catg_to_dummy(data,column,top_n):
     """
     Returns a dataframe with dummy variables for categorical variables
 
@@ -47,6 +47,7 @@ def catg_to_dummy(data,column,top_n):
     
     Returns
     -------
+    Dataframe with dummy variables for categorical variable indicated by 'column'
 
     """
     list=data[column].tolist()    
@@ -58,14 +59,35 @@ def catg_to_dummy(data,column,top_n):
                 list_top.append(value[0])
     for i,value in enumerate(list_top):
         name= 'Is' + str(list_top[i])
-        data[name]=[]
-    for i,value in enumerate(list):
+        data[name]=0
+        print data       
+    for i,value in enumerate(list_top):
         name= 'Is' + str(list_top[i])
-        data[(data[column]==list_top[i])][name] = '1'
+        data[(data[column]==list_top[i])][name] = 1
 #        data[name]=data[column].map(list_top[i]:'1')
         print data 
+        '''
     
+def catg_to_dummy_2(data,column,top_n):
+    """
+    Returns a dataframe with dummy variables for categorical variables
+
+    Parameters
+    ----------
+    data : dataframe containing data including column with categorical variable
+    column : Categorical Column [1-n]
+    top_n : integer indicating top n categories
     
+    Returns
+    -------
+    Dataframe with dummy variables for categorical variable indicated by 'column'
+
+    """
+    top_field= data[column].value_counts().index[:top_n]
+    top_df=data[data[column].isin(top_field)]
+    dummies=pd.get_dummies(top_df[column])
+    top_df= pd.concat([top_df,dummies],axis=1)
+    return top_df   
         
 
 if __name__=='__main__':
@@ -76,7 +98,8 @@ if __name__=='__main__':
     'Director':['James Bond','Steven Spielberg','Steven Spielberg','Steven Spielberg','James Bond','Steven Spielberg','James Bond','Martin S']}
     df1=pd.DataFrame(data)
     column_name='Director'
-    catg_to_dummy(df1,column_name,2)
+    new_df=catg_to_dummy_2(df1,column_name,2)
+    print new_df
     
     
     
