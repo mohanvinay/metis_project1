@@ -61,13 +61,13 @@ def catg_to_dummy(data,column,top_n):
 
     Parameters
     ----------
-    data : dataframe containing data including column with categorical variable
-    column : Categorical Column [1-n]
+    data : dataframe containing data including 1 or more columns with categorical variable
+    column : String indicating the name of the column with categorical variables
     top_n : integer indicating top n categories
     
     Returns
     -------
-    Dataframe with dummy variables for categorical variable indicated by 'column'
+    Dataframe with dummy variables for categorical variable 'column'
 
     """
     top_field= data[column].value_counts().index[:top_n]
